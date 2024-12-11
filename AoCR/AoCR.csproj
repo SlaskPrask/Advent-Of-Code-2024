@@ -8,8 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Old\7-12 Combinatorics.txt" />
-    <Compile Include="Old\9-12 FileStorage.txt" />
+    <None Include="Old\7-12 Combinatorics.cs" />
+    <None Include="Old\9-12 FileStorage.cs" />
   </ItemGroup>
 
 </Project>
