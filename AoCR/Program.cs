@@ -2,4 +2,4 @@
 
 using AoCR.Old;
 
-Console.WriteLine(_13.Day13());
+Console.WriteLine(_15.Day15());
