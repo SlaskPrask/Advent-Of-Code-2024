@@ -67,11 +67,11 @@ namespace AoCR.Old
             Z = long.Parse(z);
         }
 
-        public Vec3(long x, long y)
+        public Vec3(long x, long y, long z)
         {
             X = x;
             Y = y;
-            Z = Z;
+            Z = z;
         }
 
         public static Vec3 operator +(Vec3 v1, Vec3 v2)
