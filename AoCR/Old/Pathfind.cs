@@ -9,6 +9,14 @@ namespace AoCR.Old
 {
     public class Pathfind
     {
+
+        private static List<Vec2> directions = new List<Vec2>()
+            {
+                new Vec2(1, 0),
+                new Vec2(-1, 0),
+                new Vec2(0, 1),
+                new Vec2(0, -1)
+            };
         private static double Heuristic(Vec2 current, Vec2 end)
         {
             return (end - current).Length();
@@ -28,6 +36,39 @@ namespace AoCR.Old
             return path;
         }
 
+        public static List<Vec2> DFS(Vec2 start, Vec2 end, int[,] map)
+        {
+            Queue<Vec2> queue = new Queue<Vec2>();
+            queue.Enqueue(start);
+            HashSet<Vec2> visited = new HashSet<Vec2>();
+            visited.Add(start);
+            var parentMap = new Dictionary<Vec2, Vec2>();
+
+            while (queue.Count > 0)
+            {
+                Vec2 current = queue.Dequeue();
+                if (current == end)
+                {
+                    return ConstructPath(parentMap, current);
+                }
+                visited.Add(current);
+
+                foreach (var dir in directions)
+                {
+                    Vec2 neighbor = current + dir;
+                    if (visited.Contains(neighbor) || neighbor.X < 0 || neighbor.Y < 0 || neighbor.X >= map.GetLength(0) || neighbor.Y >= map.GetLength(1) || map[neighbor.X, neighbor.Y] != 0)
+                    {
+                        continue;
+                    }
+
+                   
+                    queue.Enqueue(neighbor);
+                    parentMap[neighbor] = current;
+                }
+            }
+            return null;
+        }
+
         public static List<Vec2> AStar(Vec2 start, Vec2 end, int[,] map)
         {
             var openPoints = new PriorityQueue<Vec2, double>();
@@ -41,20 +82,11 @@ namespace AoCR.Old
             var hScore = new Dictionary<Vec2, double> { [start] = startHeuruistic };
             var parentMap = new Dictionary<Vec2, Vec2>();
 
-            List<Vec2> directions = new List<Vec2>()
-            {
-                new Vec2(1, 0),
-                new Vec2(-1, 0),
-                new Vec2(0, 1),
-                new Vec2(0, -1)
-            };
-
             while (openPoints.Count > 0)
             {
                 var current = openPoints.Dequeue();
                 if (current == end)
                 {
-
                     return ConstructPath(parentMap, current);
                 }
 
